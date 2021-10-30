@@ -1,0 +1,33 @@
+table th {
+    white-space: nowrap;
+    word-wrap: normal;
+    word-break: normal;
+    vertical-align: middle;
+}
+
+table td {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+table tr td:nth-child(11) {
+    white-space: nowrap;
+    word-wrap: normal;
+    word-break: normal;
+}
+
+@media screen and (max-width: 768px) {
+    table tr td {
+        white-space: nowrap;
+        word-wrap: normal;
+        word-break: normal;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    table tr td {
+        white-space: nowrap;
+        word-wrap: normal;
+        word-break: normal;
+    }
+}

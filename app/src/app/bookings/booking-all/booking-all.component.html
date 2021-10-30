@@ -1,0 +1,82 @@
+<div class="container py-5">
+    <h5>Active Bookings</h5>
+
+    <hr>
+
+    <section id="filter">
+        <div class="card" style="padding: 10px;">
+
+            <div class="form-row mt-3">
+                <div class="form-group col-md-6">
+                    <label>Center Name</label>
+                    <!-- (change)="change_filter($event)" -->
+                    <select [(ngModel)]="filtered.vaccine_center_id" class="form-control">
+                        <option *ngFor="let v of vaccine_centers" [value]="v.id">
+                            {{v.name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Search</label>
+                    <input [(ngModel)]="filtered.search" class="form-control" placeholder="Search by NRIC/Name/Slot"/>
+                </div>
+            </div>
+
+            <p>
+                {{filtered.result.data.length}} result(s) found
+            </p>
+
+        </div>
+    </section>
+
+    <hr>
+
+    <div class="table-responsive">
+        <table class="table table-striped" cellspacing="0" width="100%">
+            <thead>
+                <tr class="table-success">
+                    <th></th>
+                    <th>Name</th>
+                    <th>Center Name</th>
+                    <th>Slot</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let b of all_bookings 
+                    | filter_bookings: filtered: filtered.result
+                    | paginate: { itemsPerPage: 10, currentPage: p };
+                    let i = index">
+                    <td>{{ (p - 1) * 10 + i + 1 }}</td>
+                    <td>
+                        {{b.name}}
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let v of vaccine_centers">
+                            <ng-container *ngIf="v.id == b.vaccine_center_id">
+                                <!-- {{b.vaccine_center_id}} -->
+                                {{v.name}}
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                    <td>
+                        {{b.slot}}
+                    </td>
+                    <td>
+                        <button mat-icon-button (click)="edit(b)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="delete(b)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <pagination-controls maxSize="10" previousLabel="Previous" nextLabel="Next" (pageChange)="pageChange($event)">
+        </pagination-controls>
+    </div>
+
+</div>
